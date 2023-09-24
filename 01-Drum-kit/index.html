@@ -1,0 +1,106 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <title>JS Drum Kit</title>
+    <link rel="stylesheet" href="style.css" />
+    <link rel="icon" href="https://fav.farm/🔥" />
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Mooli&display=swap"
+      rel="stylesheet"
+    />
+  </head>
+  <body class="theme">
+    <h1>
+      Play a sound
+    </h1>
+    <div class="keys">
+      <button type="button" data-key="65" class="key key-theme">
+        <kbd>A</kbd>
+        <span class="sound">clap</span>
+      </button>
+      <button type="button" data-key="83" class="key key-theme">
+        <kbd>S</kbd>
+        <span class="sound">hihat</span>
+      </button>
+      <button type="button" data-key="68" class="key key-theme">
+        <kbd>D</kbd>
+        <span class="sound">kick</span>
+      </button>
+      <button type="button" data-key="70" class="key key-theme">
+        <kbd>F</kbd>
+        <span class="sound">openhat</span>
+      </button>
+      <button type="button" data-key="71" class="key key-theme">
+        <kbd>G</kbd>
+        <span class="sound">boom</span>
+      </button>
+      <button type="button" data-key="72" class="key key-theme">
+        <kbd>H</kbd>
+        <span class="sound">ride</span>
+      </button>
+      <button type="button" data-key="74" class="key key-theme">
+        <kbd>J</kbd>
+        <span class="sound">snare</span>
+      </button>
+      <button type="button" data-key="75" class="key key-theme">
+        <kbd>K</kbd>
+        <span class="sound">tom</span>
+      </button>
+      <button type="button" data-key="76" class="key key-theme">
+        <kbd>L</kbd>
+        <span class="sound">tink</span>
+      </button>
+    </div>
+
+    <script>
+      const audios = {
+        65: 'sounds/clap.wav',
+        83: 'sounds/hihat.wav',
+        68: 'sounds/kick.wav',
+        70: 'sounds/openhat.wav',
+        71: 'sounds/boom.wav',
+        72: 'sounds/ride.wav',
+        74: 'sounds/snare.wav',
+        75: 'sounds/tom.wav',
+        76: 'sounds/tink.wav',
+      };
+
+      function removeActiveClass() {
+        this.classList.remove('key-active');
+        this.removeEventListener('transitionend', removeActiveClass);
+      }
+
+      function createAudioTag(src) {
+        const audioTag = document.createElement('audio');
+        audioTag.setAttribute('src', src);
+        return audioTag;
+      }
+
+      function playSound(event) {
+        const keyCode = event.keyCode;
+        const audioSrc = audios[keyCode];
+        const key = document.querySelector(`button[data-key="${keyCode}"]`);
+        key.addEventListener('transitionend', removeActiveClass);
+
+        if (!key) return;
+        if (!audioSrc) return;
+
+        const audioTag = createAudioTag(audioSrc);
+
+        audioTag.currentTime = 0;
+        audioTag.play();
+
+        key.classList.add('key-active');
+      }
+
+      window.addEventListener('keydown', playSound);
+
+      window.addEventListener('beforeunload', () => {
+        window.removeEventListener('keydown', playSound);
+      });
+    </script>
+  </body>
+</html>

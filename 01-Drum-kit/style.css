@@ -1,0 +1,68 @@
+*, *::after, *::before {
+  margin: 0;
+  padding: 0;
+}
+
+html {
+  font-family: 'Mooli', system-ui, -apple-system, sans-serif;
+}
+
+body {
+  width: 100vw;
+  height: 100vh;
+  display: grid;
+  place-items: center;
+}
+
+.keys {
+  width: 80ch;
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(60px, 100px));
+  gap: 0.7rem;
+}
+
+.key {
+  width: 100%;
+  aspect-ratio: 1/1;
+  display: grid;
+  place-items: center;
+  border-width: 1px;
+  border-style: solid;
+  border-radius: 0.5rem;
+}
+.key kbd {
+  font-weight: 600;
+  font-size: 1.4rem;
+}
+
+.key-theme {
+  box-shadow: 2px 2px 4px rgb(32, 32, 32);
+  transition: background-color 0.3s ease, transform 0.3s ease;
+}
+
+.theme {
+  background: rgb(94, 94, 94);
+  color: #fff;
+}
+
+@media (prefers-color-scheme: dark) {
+  .theme {
+    background: #2e2e2e;
+    color: rgb(255, 255, 255);
+  }
+
+  .key-theme {
+    background-color: #2e2e2e;
+    color: #fff;
+    border-color: #202020;
+  }
+
+  .key-active {
+    background-color: #5c3461;
+    transform: scale(1.1);
+  }
+
+  .key-theme:hover {
+    background-color: #5c3461;
+  }
+}
